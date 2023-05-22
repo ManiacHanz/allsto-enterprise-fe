@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 // import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 
 // const columns: GridColDef[] = [
@@ -53,9 +52,9 @@ const Dashboard = () => {
   return (
     <Layout
       addonAfter={
-        <StyledButton variant="contained" className="h-10">
+        <Button variant="contained" className="h-10">
           + Create Payment Link
-        </StyledButton>
+        </Button>
       }
     >
       <div>{router.query.id}</div>
@@ -76,9 +75,5 @@ const Dashboard = () => {
     </Layout>
   );
 };
-
-const StyledButton = styled(Button)`
-  background-color: #4f46e5;
-`;
 
 export default Dashboard;
