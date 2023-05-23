@@ -3,16 +3,19 @@ import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "@/styles/themes";
-
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 import "../styles/globals.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "@/lib/db/index";
+
+const cache = createCache({
+  key: "css",
+  prepend: true,
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <CacheProvider value={cache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
@@ -21,6 +24,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </CacheProvider>
   );
 }

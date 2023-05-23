@@ -1,7 +1,15 @@
-export const Form = () => {
+import { MyOrgFormValue } from "@/interface/dashboard";
+import { useFormikContext, Form } from "formik";
+
+export const UserForm = () => {
+  const fc = useFormikContext<MyOrgFormValue>();
+  const { submitForm, values = {} } = fc;
+
+  console.log(7, values);
+
   return (
     <div className="p-8 ">
-      <form>
+      <Form onSubmit={submitForm}>
         <div className="space-y-12">
           <div className="">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -20,9 +28,9 @@ export const Form = () => {
                     aria-hidden="true"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                   <button
@@ -40,18 +48,19 @@ export const Form = () => {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="col-span-full">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  First name
+                  Name
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
+                    name="name"
+                    id="name"
                     autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={values.name}
                   />
                 </div>
               </div>
@@ -70,6 +79,7 @@ export const Form = () => {
                     type="email"
                     autoComplete="email"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={values.email}
                   />
                 </div>
               </div>
@@ -88,32 +98,33 @@ export const Form = () => {
                     type="text"
                     autoComplete="address"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={values.address}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="country"
+                  htmlFor="receiveBy"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Receive Payments On
                 </label>
                 <div className="mt-2">
                   <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
+                    id="receiveBy"
+                    name="receiveBy"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    value={values.receiveBy}
                   >
                     <option>Polygon</option>
-                    <option>Polygon</option>
-                    <option>Polygon</option>
+                    <option>Ethereum</option>
+                    <option>Arbitrum</option>
                   </select>
                 </div>
               </div>
 
-              <fieldset className="sm:col-span-3">
+              <fieldset className="sm:col-span-3" onChange={console.log}>
                 <legend className="text-sm font-semibold leading-6 text-gray-900">
                   Receiving Currency
                 </legend>
@@ -176,11 +187,12 @@ export const Form = () => {
           <button
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            // onClick={submitForm}
           >
             Save
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

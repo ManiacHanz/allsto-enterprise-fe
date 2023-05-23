@@ -1,6 +1,11 @@
 import { numToUSD, setPrecision } from "@/utils/common";
 import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { FC } from "react";
+
+type Props = {
+  data?: any[];
+};
 
 const columns: GridColDef[] = [
   {
@@ -15,7 +20,6 @@ const columns: GridColDef[] = [
     width: 260,
     sortable: false,
     renderCell: (params) => {
-      console.log(14, params);
       return (
         <div>
           <div>{params.value}</div>
@@ -47,20 +51,10 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = Array.from({ length: 10 }, (x, idx) => {
-  return {
-    id: idx,
-    link: `https://alls.to/Web3-Saas-Inc/payment${idx}`,
-    price: numToUSD(setPrecision(Math.random() * 100, 2)),
-    item: Math.random() > 0.5 ? "Monthly Basic Subscription" : undefined,
-    createdAt: new Date().toLocaleString(),
-  };
-});
-
-export const Table = () => {
+export const Table: FC<Props> = ({ data = [] }) => {
   return (
     <DataGrid
-      rows={rows}
+      rows={data}
       columns={columns}
       initialState={{
         pagination: {
