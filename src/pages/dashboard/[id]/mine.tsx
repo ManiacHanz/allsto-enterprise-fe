@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout";
 import { useRouter } from "next/router";
-import { Form } from "./components/Form";
+import { Form } from "@/components/dashboard/Form";
 
 const Dashboard = () => {
   const router = useRouter();

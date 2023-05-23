@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { Table } from "./components/Table";
+import { Table } from "@/components/dashboard/Table";
 
 const Dashboard = () => {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import { numToUSD, setPrecision } from "@/utils/common";
 import { Button } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
   {
