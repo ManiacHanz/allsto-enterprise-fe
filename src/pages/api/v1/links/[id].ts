@@ -1,39 +1,45 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next"
 // import type { User } from '@/interfaces'
-import {getRandomArbitrary, numToUSD
-  ,setPrecision} from '@/utils/common'
+import { getRandomArbitrary, numToUSD, setPrecision } from "@/utils/common"
+import { Links } from "@/lib/db/models"
+import dbConnect from "@/lib/db/connect"
 
 type User = {
-  id: number | string,
-  name?: string,
+  id: number | string
+  name?: string
 }
 
-const mock = Array.from({ length: Math.ceil(getRandomArbitrary(25,5)) }, (x, idx) => {
-  return {
-    id: idx,
-    link: `https://alls.to/Web3-Saas-Inc/payment${idx}`,
-    price: numToUSD(setPrecision(Math.random() * 100, 2)),
-    item: Math.random() > 0.5 ? "Monthly Basic Subscription" : undefined,
-    createdAt: new Date().toLocaleString(),
-  };
-});
+const mock = Array.from(
+  { length: Math.ceil(getRandomArbitrary(25, 5)) },
+  (x, idx) => {
+    return {
+      id: idx,
+      link: `https://alls.to/Web3-Saas-Inc/payment${idx}`,
+      price: numToUSD(setPrecision(Math.random() * 100, 2)),
+      item: Math.random() > 0.5 ? "Monthly Basic Subscription" : undefined,
+      createdAt: new Date().toLocaleString(),
+    }
+  }
+)
 
-export default function linkHandler(
+export default async function linkHandler(
   req: NextApiRequest,
   res: NextApiResponse<User>
 ) {
   const { query, method } = req
   const id = parseInt(query.id as string, 10)
 
-  console.log(29, id)
+  await dbConnect()
+  const result = await Links.find({})
+  console.log("linkHandler", result)
 
-  if(!id) {
+  if (!id) {
     res.status(400).json([])
-    return;
+    return
   }
-  
+
   res.status(200).json(mock)
-  
+
   // switch (method) {
   //   case 'GET':
   //     // Get data from your database

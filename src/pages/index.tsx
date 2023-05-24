@@ -1,16 +1,17 @@
-import Head from "next/head";
-import clientPromise from "@/lib/db/mongodb";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import Head from "next/head"
+import clientPromise from "@/lib/db/mongodb"
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
+import Link from "next/link"
 
 type ConnectionStatus = {
-  isConnected: boolean;
-};
+  isConnected: boolean
+}
 
 export const getServerSideProps: GetServerSideProps<
   ConnectionStatus
 > = async () => {
   try {
-    await clientPromise;
+    await clientPromise
     // `await clientPromise` will use the default database passed in the MONGODB_URI
     // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
     //
@@ -22,14 +23,14 @@ export const getServerSideProps: GetServerSideProps<
 
     return {
       props: { isConnected: true },
-    };
+    }
   } catch (e) {
-    console.error(e);
+    console.error(e)
     return {
       props: { isConnected: false },
-    };
+    }
   }
-};
+}
 
 export default function Home({
   isConnected,
@@ -60,35 +61,21 @@ export default function Home({
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="card"
+          <Link
+            href="/dashboard/123/mine"
+            className="m-4 p-6 text-left basis-2/5 rounded-s-lg hover:text-emerald-500 border border-solid border-inherit"
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            <h3>Dashboard</h3>
+            <p>To Dashboard</p>
+          </Link>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card"
+          <Link
+            href="/pay"
+            className="m-4 p-6 text-left basis-2/5 rounded-s-lg hover:text-emerald-500 border border-solid border-inherit"
           >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <h3>Pay</h3>
+            <p>To Payment</p>
+          </Link>
         </div>
       </main>
 
@@ -253,5 +240,5 @@ export default function Home({
         }
       `}</style>
     </div>
-  );
+  )
 }
