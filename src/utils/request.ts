@@ -1,3 +1,5 @@
+// @ts-nocheck
+// TODO: define types
 async function fetcher(req, opt) {
   let reqUrl
   if (req.startsWith("http")) {
