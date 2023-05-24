@@ -31,12 +31,6 @@ export default async function linkHandler(
 
   await dbConnect()
   const result = await Links.find({})
-  console.log("linkHandler", result)
-
-  if (!id) {
-    res.status(400).json([])
-    return
-  }
 
   res.status(200).json(mock)
 
