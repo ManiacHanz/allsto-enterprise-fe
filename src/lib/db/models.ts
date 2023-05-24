@@ -35,6 +35,7 @@ const paySchema = new Schema(
     network: String,
     payWith: String,
     type: Number,
+    status: { type: Number, default: 0 },
   },
   { timestamps: true }
 )

@@ -33,11 +33,7 @@ export default async function linkHandler(
         {
           $facet: {
             total: [{ $count: "total" }],
-            data: [
-              { $skip: 0 },
-              { $limit: 20 },
-              { $project: { _id: 0, __v: 0 } },
-            ],
+            data: [{ $skip: 0 }, { $limit: 20 }, { $project: { __v: 0 } }],
           },
         },
         {

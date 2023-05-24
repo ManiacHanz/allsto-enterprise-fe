@@ -9,14 +9,16 @@ async function fetcher(req, opt) {
   }
   const res = await fetch(reqUrl, opt)
   const json = await res.json()
-  if (json.result) {
-    return json.result
-  } else {
-    throw new Error(json.error.message)
-  }
+  return json
+  // TODO: Wrap in middleware
+  // if (json.result) {
+  //   return json.result
+  // } else {
+  //   throw new Error(json.error.message)
+  // }
 }
 
-fetcher.post = async function (req, body, opt) {
+fetcher.post = async function (req, body, opt?: any) {
   return await fetcher(req, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
