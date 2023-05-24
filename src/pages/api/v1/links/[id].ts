@@ -69,7 +69,7 @@ export default async function linkHandler(
       res.status(200).json(doc)
       break
     default:
-      res.setHeader("Allow", ["GET", "PUT"])
+      res.setHeader("Allow", ["GET", "POST", "PUT"])
       res.status(405).end(`Method ${method} Not Allowed`)
   }
 }
