@@ -1,41 +1,48 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-// import type { User } from '@/interfaces'
-import { getRandomArbitrary, numToUSD, setPrecision } from "@/utils/common";
+import type { NextApiRequest, NextApiResponse } from "next"
+import dbConnect from "@/lib/db/connect"
+import { Users } from "@/lib/db/models"
 
-type User = {
-  id: number | string;
-  name?: string;
-};
+export type User = {
+  id: string
+  logo?: string
+  name?: string
+  email?: string
+  address?: string
+  receiveBy?: string
+  currency?: string
+}
 
-const mock = {
-  id: "123",
-  logo: "",
-  name: `Web3 Sass Inc.`,
-  email: "test email@test.com",
-  address: "0x957328d804918017321809314732",
-  receiveBy: "Ethereum",
-  currency: "USDC",
-};
-
-export default function userHandler(
+export default async function userHandler(
   req: NextApiRequest,
-  res: NextApiResponse<User>
+  res: NextApiResponse
 ) {
-  const { query, method } = req;
-  const id = parseInt(query.id as string, 10);
-  const name = query.name as string;
+  const { query, body, method } = req
+  const { id } = query
+
+  await dbConnect()
 
   switch (method) {
     case "GET":
       // Get data from your database
-      res.status(200).json(mock);
-      break;
+      const result = await Users.findOne({ id }, { _id: 0 })
+      res.status(200).json(result)
+      break
     case "PUT":
       // Update or create data in your database
-      res.status(200).json({ id, name: name || `User ${id}` });
-      break;
+      try {
+        const result = await Users.findOneAndUpdate({ id }, body, {
+          projection: { _id: 0 },
+          returnDocument: "after",
+          upsert: true,
+        })
+        res.status(200).json(result)
+      } catch (err) {
+        console.log(err)
+        res.status(500).end("Service unavailable")
+      }
+      break
     default:
-      res.setHeader("Allow", ["GET", "PUT"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      res.setHeader("Allow", ["GET", "PUT"])
+      res.status(405).end(`Method ${method} Not Allowed`)
   }
 }

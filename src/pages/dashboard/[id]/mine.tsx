@@ -1,29 +1,28 @@
-import { Layout } from "@/components/layout";
-import { useRouter } from "next/router";
-import { UserForm } from "@/components/dashboard/UserForm";
-import useSwr from "swr";
-import { Formik, FormikConfig } from "formik";
-import { MyOrgFormValue } from "@/interface/dashboard";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { Layout } from "@/components/layout"
+import { useRouter } from "next/router"
+import { UserForm } from "@/components/dashboard/UserForm"
+import useSwr from "swr"
+import { Formik, FormikConfig } from "formik"
+import { MyOrgFormValue } from "@/interface/dashboard"
+import fetcher from "@/utils/request"
 
 const MyEnterPrise = () => {
-  const { query } = useRouter();
+  const { query } = useRouter()
 
   const { data, error, isLoading } = useSwr<any>(
-    query.id ? `/api/v1/user/${query.id}` : null,
+    query.id ? `user/${query.id}` : null,
     fetcher
-  );
+  )
 
-  console.log("mine: ", data, isLoading);
+  console.log("mine: ", data, isLoading)
 
   const submitForm: FormikConfig<MyOrgFormValue>["onSubmit"] = (
     values,
     formikHelpers
   ) => {
-    console.log(20, values, formikHelpers);
-    return Promise.reject();
-  };
+    console.log(20, values, formikHelpers)
+    return Promise.reject()
+  }
 
   return (
     <Layout>
@@ -40,7 +39,7 @@ const MyEnterPrise = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default MyEnterPrise;
+export default MyEnterPrise

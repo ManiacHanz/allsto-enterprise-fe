@@ -2,19 +2,23 @@ import mongoose from "mongoose"
 const { Schema } = mongoose
 
 const linksSchema = new Schema({
-  uid: String,
-  links: Array,
+  userId: String,
+  link: String,
+  price: Number,
+  item: String,
+  updatedAt: { type: Date, default: Date.now },
 })
 
 const userSchema = new Schema({
-  uid: String,
+  id: String,
   logo: String,
   name: String,
   email: String,
   address: String,
   receiveBy: String,
   currency: String,
-  updated: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 })
 
 export const Links = mongoose.models.Link || mongoose.model("Link", linksSchema)
+export const Users = mongoose.models.User || mongoose.model("User", userSchema)
