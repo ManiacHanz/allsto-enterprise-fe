@@ -35,7 +35,6 @@ const Dashboard = () => {
       width: 200,
       sortable: false,
       renderCell: (params) => {
-        console.log(params)
         return (
           <div>
             <div>{params.value}</div>

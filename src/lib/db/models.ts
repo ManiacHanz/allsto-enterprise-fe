@@ -12,7 +12,7 @@ const linksSchema = new Schema(
   { timestamps: true }
 )
 
-const userSchema = new Schema(
+const profileSchema = new Schema(
   {
     id: String,
     logo: String,
@@ -41,6 +41,7 @@ const paySchema = new Schema(
 )
 
 export const Links = mongoose.models.Link || mongoose.model("Link", linksSchema)
-export const Users = mongoose.models.User || mongoose.model("User", userSchema)
+export const Profiles =
+  mongoose.models.Profile || mongoose.model("Profile", profileSchema)
 export const Payments =
   mongoose.models.Payment || mongoose.model("Payment", paySchema)

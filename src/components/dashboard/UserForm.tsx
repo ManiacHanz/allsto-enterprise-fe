@@ -1,11 +1,9 @@
-import { MyOrgFormValue } from "@/interface/dashboard";
-import { useFormikContext, Form } from "formik";
+import { MyOrgFormValue } from "@/interface/dashboard"
+import { useFormikContext, Form } from "formik"
 
 export const UserForm = () => {
-  const fc = useFormikContext<MyOrgFormValue>();
-  const { submitForm, values = {} } = fc;
-
-  console.log(7, values);
+  const fc = useFormikContext<MyOrgFormValue>()
+  const { submitForm, values = {} } = fc
 
   return (
     <div className="p-8 ">
@@ -60,7 +58,7 @@ export const UserForm = () => {
                     id="name"
                     autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={values.name}
+                    value={values?.name}
                   />
                 </div>
               </div>
@@ -79,7 +77,7 @@ export const UserForm = () => {
                     type="email"
                     autoComplete="email"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={values.email}
+                    value={values?.email}
                   />
                 </div>
               </div>
@@ -98,7 +96,7 @@ export const UserForm = () => {
                     type="text"
                     autoComplete="address"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={values.address}
+                    value={values?.address}
                   />
                 </div>
               </div>
@@ -115,7 +113,7 @@ export const UserForm = () => {
                     id="receiveBy"
                     name="receiveBy"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    value={values.receiveBy}
+                    value={values?.receiveBy}
                   >
                     <option>Polygon</option>
                     <option>Ethereum</option>
@@ -194,5 +192,5 @@ export const UserForm = () => {
         </div>
       </Form>
     </div>
-  );
-};
+  )
+}

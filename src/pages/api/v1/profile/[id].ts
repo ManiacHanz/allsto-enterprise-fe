@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "@/lib/db/connect"
-import { Users } from "@/lib/db/models"
+import { Profiles } from "@/lib/db/models"
 
 export type User = {
   id: string
@@ -24,13 +24,13 @@ export default async function userHandler(
   switch (method) {
     case "GET":
       // Get data from your database
-      const result = await Users.findOne({ id }, { _id: 0 })
+      const result = await Profiles.findOne({ id }, { _id: 0 })
       res.status(200).json(result)
       break
     case "PUT":
       // Update or create data in your database
       try {
-        const result = await Users.findOneAndUpdate({ id }, body, {
+        const result = await Profiles.findOneAndUpdate({ id }, body, {
           projection: { _id: 0 },
           returnDocument: "after",
           upsert: true,

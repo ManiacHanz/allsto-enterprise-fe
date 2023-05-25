@@ -20,7 +20,6 @@ export const PayForm: FC<Props> = ({ onSubmit }) => {
   const [form] = Form.useForm<Values>()
 
   const onFinish = (values: Values) => {
-    console.log(values)
     onSubmit(values)
   }
 

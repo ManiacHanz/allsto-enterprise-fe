@@ -10,17 +10,14 @@ const MyEnterPrise = () => {
   const { query } = useRouter()
 
   const { data, error, isLoading } = useSwr<any>(
-    query.id ? `user/${query.id}` : null,
+    query.id ? `profile/${query.id}` : null,
     fetcher
   )
-
-  console.log("mine: ", data, isLoading)
 
   const submitForm: FormikConfig<MyOrgFormValue>["onSubmit"] = (
     values,
     formikHelpers
   ) => {
-    console.log(20, values, formikHelpers)
     return Promise.reject()
   }
 

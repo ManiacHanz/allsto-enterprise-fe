@@ -28,7 +28,6 @@ export default async function payHandler(
           },
         },
       ])
-      console.log(36, result)
       res.status(200).json(result[0])
       break
     case "POST":
