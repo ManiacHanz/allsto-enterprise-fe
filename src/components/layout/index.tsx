@@ -42,8 +42,6 @@ export const Layout: FC<Props> = ({ children, addonAfter }) => {
     return routes.find((route) => route.path === path)?.label ?? ""
   }
 
-  console.log("session:", session, rest)
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="h-16 bg-gray-800 flex items-center px-4 justify-between">
