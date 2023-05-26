@@ -99,7 +99,11 @@ export default function Pay() {
             placeholder="Gift or discount code"
             className="flex-1 px-4 border rounded-md py-2"
           />
-          <Button variant="contained" color="secondary" className="">
+          <Button
+            variant="contained"
+            color="secondary"
+            className="bg-indigo-700 hover:bg-indigo-500"
+          >
             Apply
           </Button>
         </div>
