@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { FC, ReactNode } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { Avatar, Button } from "@mui/material"
-import { Session } from "next-auth"
+import classNames from "classnames"
 
 type Props = {
   children: ReactNode
@@ -37,8 +37,9 @@ export const Layout: FC<Props> = ({ children, addonAfter }) => {
     pathname,
   } = useRouter()
 
+  const path = pathname.split("/").pop()
+
   const getPathname = () => {
-    const path = pathname.split("/").pop()
     return routes.find((route) => route.path === path)?.label ?? ""
   }
 
@@ -46,15 +47,29 @@ export const Layout: FC<Props> = ({ children, addonAfter }) => {
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="h-16 bg-gray-800 flex items-center px-4 justify-between">
         <div className="space-x-8 text-white">
-          {routes.map((route) => (
-            <Link
-              key={route.path}
-              href={`/dashboard/${id}/${route.path}`}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-            >
-              {route.label}
-            </Link>
-          ))}
+          {routes.map((route) => {
+            const isActive = path === route.path
+            const cls = classNames(
+              "text-gray-300",
+              "hover:bg-gray-700",
+              "hover:text-white",
+              "rounded-md",
+              "px-3",
+              "py-2",
+              "text-sm",
+              "font-medium",
+              { "bg-gray-900": isActive }
+            )
+            return (
+              <Link
+                key={route.path}
+                href={`/dashboard/${id}/${route.path}`}
+                className={cls}
+              >
+                {route.label}
+              </Link>
+            )
+          })}
         </div>
         <div>
           {session ? (
