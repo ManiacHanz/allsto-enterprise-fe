@@ -4,12 +4,18 @@ import fetcher from "@/utils/request"
 import { useRouter } from "next/router"
 import { message } from "antd"
 
+const ITEM_DESCRIPTION = "Monthly Basic Subscription"
+
 export default function PayTo() {
   const { query } = useRouter()
   const { id } = query
 
   const onSubmit = async (values: Values) => {
-    const result = await fetcher.post(`pay/${id}`, values)
+    const result = await fetcher.post(`pay/${id}`, {
+      website: location.href,
+      item: ITEM_DESCRIPTION,
+      ...values,
+    })
     message.success("pay successfully")
   }
   return (

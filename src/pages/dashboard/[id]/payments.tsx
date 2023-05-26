@@ -1,8 +1,10 @@
 import { Table } from "@/components/dashboard/Table"
 import { Layout } from "@/components/layout"
+import { numToUSD } from "@/utils/common"
 import fetcher from "@/utils/request"
 import { Button, Chip, CircularProgress } from "@mui/material"
 import { GridColDef } from "@mui/x-data-grid"
+import dayjs from "dayjs"
 import { useRouter } from "next/router"
 import useSwr from "swr"
 
@@ -35,16 +37,25 @@ const Dashboard = () => {
       headerName: "INVOICE ID",
       width: 300,
       sortable: false,
-    },
-    {
-      field: "amount",
-      headerName: "BILL AMOUNT",
-      width: 200,
-      sortable: false,
       renderCell: (params) => {
         return (
           <div>
             <div>{params.value}</div>
+            <div className="text-gray-400 text-xs">{params.row.website}</div>
+          </div>
+        )
+      },
+    },
+    {
+      field: "amount",
+      headerName: "BILL AMOUNT",
+      width: 180,
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <div>
+            <div>{numToUSD(params.value)}</div>
+            <div className="text-gray-400 text-xs">{params.row.item}</div>
           </div>
         )
       },
@@ -52,14 +63,26 @@ const Dashboard = () => {
     {
       field: "name",
       headerName: "CLIENT",
-      width: 150,
+      width: 170,
       sortable: false,
+      renderCell: (params) => {
+        return (
+          <div>
+            <div>{params.value}</div>
+            <div className="text-gray-400 text-xs">{params.row.email}</div>
+          </div>
+        )
+      },
     },
     {
       field: "createdAt",
       headerName: "BILL TIME",
       width: 200,
       sortable: false,
+      renderCell: (params) => {
+        if (!params.value) return ""
+        return dayjs(params.value).format("YYYY/MM/DD HH:mm:ss")
+      },
     },
     {
       field: "status",

@@ -36,6 +36,8 @@ const paySchema = new Schema(
     payWith: String,
     type: Number,
     status: { type: Number, default: 0 },
+    website: String,
+    item: String,
   },
   { timestamps: true }
 )

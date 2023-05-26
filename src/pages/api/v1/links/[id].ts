@@ -30,6 +30,7 @@ export default async function linkHandler(
       // Get data from your database
       const result = await Links.aggregate([
         { $match: { userId: id } },
+        { $sort: { createdAt: -1 } },
         {
           $facet: {
             total: [{ $count: "total" }],

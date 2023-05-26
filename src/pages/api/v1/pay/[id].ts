@@ -17,6 +17,7 @@ export default async function payHandler(
     case "GET":
       const result = await Payments.aggregate([
         { $match: { userId: id } },
+        { $sort: { createdAt: -1 } },
         {
           $facet: {
             total: [{ $count: "total" }],
