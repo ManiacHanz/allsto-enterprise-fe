@@ -15,11 +15,12 @@ export const Table: FC<Props> = ({ data, columns = [] }) => {
       initialState={{
         pagination: {
           paginationModel: {
-            pageSize: 5,
+            pageSize: 20,
           },
         },
       }}
-      pageSizeOptions={[5]}
+      onPaginationModelChange={console.log}
+      pageSizeOptions={[20, 30, 50, 100]}
       disableRowSelectionOnClick
     />
   )

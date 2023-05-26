@@ -2,6 +2,8 @@ import Head from "next/head"
 import clientPromise from "@/lib/db/mongodb"
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import Link from "next/link"
+import { Button } from "@mui/material"
+import { signIn } from "next-auth/react"
 
 type ConnectionStatus = {
   isConnected: boolean
@@ -60,6 +62,9 @@ export default function Home({
           Get started by editing <code>pages/index.js</code>
         </p>
 
+        <Button className="my-4" onClick={() => signIn()}>
+          Sign In
+        </Button>
         <div className="grid">
           <Link
             href="/dashboard/123/mine"

@@ -1,6 +1,8 @@
-import { Button } from "@mui/material";
+import { Button } from "@mui/material"
+import { useRouter } from "next/router"
 
 export default function Pay() {
+  const router = useRouter()
   return (
     <main className="flex min-h-screen justify-between">
       <div className="flex-1 bg-white px-20 py-28 border-r">
@@ -73,6 +75,7 @@ export default function Pay() {
         <Button
           className="w-full bg-gradient-to-r  from-green-400 to-blue-500 mt-96 mb-5"
           variant="contained"
+          onClick={() => router.push("/pay/123")}
         >
           Pay USD99.00 with AllsTo
         </Button>
@@ -106,5 +109,5 @@ export default function Pay() {
         </div>
       </div>
     </main>
-  );
+  )
 }

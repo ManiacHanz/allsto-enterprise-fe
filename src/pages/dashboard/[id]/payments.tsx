@@ -1,15 +1,22 @@
 import { Table } from "@/components/dashboard/Table"
 import { Layout } from "@/components/layout"
 import fetcher from "@/utils/request"
-import { Button, CircularProgress } from "@mui/material"
+import { Button, Chip, CircularProgress } from "@mui/material"
 import { GridColDef } from "@mui/x-data-grid"
 import { useRouter } from "next/router"
 import useSwr from "swr"
 
-const statusMap = ["Unpaid", "Waiting To Sent", "Paid"]
+const statusMap = [
+  ["Unpaid", "primary"],
+  ["Waiting To Sent", "secondary"],
+  ["Paid", "info"],
+]
 
 const renderStatus = (num: number) => {
-  return statusMap[num] ?? ""
+  const [label, color] = statusMap[num] ?? ["", "primary"]
+  // @ts-ignore
+  // TODO: remove this ignore
+  return label ? <Chip size="small" label={label} color={color} /> : ""
 }
 
 const Dashboard = () => {
@@ -76,8 +83,21 @@ const Dashboard = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button>Edit</Button>
-            <Button>Share Link</Button>
+            {params.row.status === 0 && (
+              <Button disableRipple>Download Receipt</Button>
+            )}
+            {params.row.status === 1 && (
+              <>
+                <Button disableRipple>Edit</Button>
+                <Button disableRipple>Share Link</Button>
+              </>
+            )}
+            {params.row.status === 2 && (
+              <>
+                <Button disableRipple>View</Button>
+                <Button disableRipple>Notify</Button>
+              </>
+            )}
           </>
         )
       },

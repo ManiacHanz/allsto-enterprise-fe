@@ -1,4 +1,4 @@
-import { ReceiveBy } from "@/interface/dashboard"
+import { ObjectId } from "mongodb"
 import mongoose from "mongoose"
 const { Schema } = mongoose
 
@@ -14,7 +14,7 @@ const linksSchema = new Schema(
 
 const profileSchema = new Schema(
   {
-    id: String,
+    userId: String,
     logo: String,
     name: String,
     email: String,
@@ -40,8 +40,24 @@ const paySchema = new Schema(
   { timestamps: true }
 )
 
+// This is for auto sign in
+const accountSchema = new Schema({
+  provider: String,
+  type: String,
+  providerAccountId: String,
+  access_token: String,
+  token_type: String,
+  scope: String,
+  userId: {
+    type: ObjectId,
+  },
+  expires: String,
+})
+
 export const Links = mongoose.models.Link || mongoose.model("Link", linksSchema)
 export const Profiles =
   mongoose.models.Profile || mongoose.model("Profile", profileSchema)
 export const Payments =
   mongoose.models.Payment || mongoose.model("Payment", paySchema)
+export const Accounts =
+  mongoose.models.Account || mongoose.model("Account", accountSchema)

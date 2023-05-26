@@ -7,7 +7,9 @@ export default async function payHandler(
   res: NextApiResponse
 ) {
   const { query, body, method } = req
-  const { id } = query
+  const { id, page = 1, pageSize = 20 } = query
+  const limit = Number(pageSize)
+  const skip = limit * (Number(page) - 1)
 
   await dbConnect()
 
@@ -18,7 +20,11 @@ export default async function payHandler(
         {
           $facet: {
             total: [{ $count: "total" }],
-            data: [{ $skip: 0 }, { $limit: 20 }, { $project: { __v: 0 } }],
+            data: [
+              { $skip: skip },
+              { $limit: limit },
+              { $project: { __v: 0 } },
+            ],
           },
         },
         {

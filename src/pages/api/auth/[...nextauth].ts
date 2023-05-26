@@ -6,6 +6,7 @@ import type { AdapterUser } from "next-auth/adapters"
 import GithubProvider from "next-auth/providers/github"
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import mongo from "@/lib/db/mongodb"
+import { Accounts } from "@/lib/db/models"
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -22,6 +23,18 @@ export const authOptions = {
     maxAge: 24 * 3600,
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      const item = await Accounts.findOne({
+        providerAccountId: account.providerAccountId,
+      })
+      if (item) {
+        // if item does not exist, this is the first time the account sign in
+        item["access_token"] = account["access_token"]
+        await item.save()
+      }
+
+      return true
+    },
     async jwt({ token, account, ...rest }) {
       // console.log("jwt callbacks", token, account, rest)
       // Persist the OAuth access_token to the token right after signin
