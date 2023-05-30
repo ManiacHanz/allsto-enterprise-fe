@@ -82,7 +82,7 @@ export default function Home({
 
         <div className="grid">
           <Link
-            href="/dashboard/123/mine"
+            href="/dashboard/mine"
             className="m-4 p-6 text-left basis-2/5 rounded-s-lg hover:text-emerald-500 border border-solid border-inherit"
           >
             <h3>Dashboard</h3>

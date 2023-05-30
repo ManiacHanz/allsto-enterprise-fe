@@ -78,5 +78,5 @@ export const middleware = withAuth(
 )
 
 export const config = {
-  matcher: "/dashboard/:path*",
+  matcher: "/api/v1/:path*",
 }

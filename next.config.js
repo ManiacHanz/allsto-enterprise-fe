@@ -6,6 +6,6 @@ const nextConfig = {
     "@mui/system",
     "@mui/icons-material", // If @mui/icons-material is being used
   ],
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

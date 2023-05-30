@@ -7,6 +7,7 @@ import { theme } from "@/styles/themes"
 import { CacheProvider } from "@emotion/react"
 import createCache from "@emotion/cache"
 import "../styles/globals.css"
+import useSWR, { SWRConfig } from "swr"
 
 const cache = createCache({
   key: "css",
@@ -18,17 +19,22 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <CacheProvider value={cache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </CacheProvider>
-    </SessionProvider>
+    <SWRConfig value={{ revalidateOnFocus: false }}>
+      <SessionProvider session={session}>
+        <CacheProvider value={cache}>
+          <Head>
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CacheProvider>
+      </SessionProvider>
+    </SWRConfig>
   )
 }
