@@ -3,7 +3,8 @@ import clientPromise from "@/lib/db/mongodb"
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import Link from "next/link"
 import { Button } from "@mui/material"
-import { signIn } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
+import Image from "next/image"
 
 type ConnectionStatus = {
   isConnected: boolean
@@ -37,6 +38,8 @@ export const getServerSideProps: GetServerSideProps<
 export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { data: session } = useSession()
+
   return (
     <div className="container">
       <Head>
@@ -61,10 +64,22 @@ export default function Home({
         <p className="description">
           Get started by editing <code>pages/index.js</code>
         </p>
+        {!session ? (
+          <Button
+            className="my-4"
+            onClick={() => signIn("", { callbackUrl: "/dashboard/mine" })}
+          >
+            Sign In
+          </Button>
+        ) : (
+          <Button
+            className="my-4"
+            onClick={() => signOut({ callbackUrl: "/" })}
+          >
+            Sign Out
+          </Button>
+        )}
 
-        <Button className="my-4" onClick={() => signIn()}>
-          Sign In
-        </Button>
         <div className="grid">
           <Link
             href="/dashboard/123/mine"
@@ -91,7 +106,7 @@ export default function Home({
           rel="noopener noreferrer"
         >
           Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+          <Image src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
 

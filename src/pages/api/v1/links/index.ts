@@ -1,20 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { getRandomArbitrary, numToUSD, setPrecision } from "@/utils/common"
-import { Links } from "@/lib/db/models"
+import { Accounts, Links } from "@/lib/db/models"
 import dbConnect from "@/lib/db/connect"
+import { getToken } from "next-auth/jwt"
 
-const mock = Array.from(
-  { length: Math.ceil(getRandomArbitrary(25, 5)) },
-  (x, idx) => {
-    return {
-      id: idx,
-      link: `https://alls.to/Web3-Saas-Inc/payment${idx}`,
-      price: numToUSD(setPrecision(Math.random() * 100, 2)),
-      item: Math.random() > 0.5 ? "Monthly Basic Subscription" : undefined,
-      createdAt: new Date().toLocaleString(),
-    }
-  }
-)
+const secret = process.env.NEXTAUTH_SECRET
 
 export default async function linkHandler(
   req: NextApiRequest,
@@ -27,23 +16,30 @@ export default async function linkHandler(
 
   switch (method) {
     case "GET":
-      // Get data from your database
-      const result = await Links.aggregate([
-        { $match: { userId: id } },
-        { $sort: { createdAt: -1 } },
-        {
-          $facet: {
-            total: [{ $count: "total" }],
-            data: [{ $skip: 0 }, { $limit: 20 }, { $project: { __v: 0 } }],
+      const token = await getToken({ req, secret })
+      const accessToken = token?.accessToken
+      const item = await Accounts.findOne({ access_token: accessToken })
+
+      let result = []
+      if (item) {
+        result = await Links.aggregate([
+          { $match: { userId: item.userId } },
+          { $sort: { createdAt: -1 } },
+          {
+            $facet: {
+              total: [{ $count: "total" }],
+              data: [{ $skip: 0 }, { $limit: 20 }, { $project: { __v: 0 } }],
+            },
           },
-        },
-        {
-          $project: {
-            total: { $arrayElemAt: ["$total.total", 0] },
-            data: 1,
+          {
+            $project: {
+              total: { $arrayElemAt: ["$total.total", 0] },
+              data: 1,
+            },
           },
-        },
-      ])
+        ])
+      }
+
       res.status(200).json(result[0])
       break
     case "POST":

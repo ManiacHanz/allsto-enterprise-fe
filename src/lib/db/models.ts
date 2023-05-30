@@ -4,7 +4,7 @@ const { Schema } = mongoose
 
 const linksSchema = new Schema(
   {
-    userId: String,
+    userId: { type: ObjectId },
     link: String,
     price: Number,
     item: String,
@@ -14,7 +14,7 @@ const linksSchema = new Schema(
 
 const profileSchema = new Schema(
   {
-    userId: String,
+    userId: { type: ObjectId },
     logo: String,
     name: String,
     email: String,
@@ -27,7 +27,7 @@ const profileSchema = new Schema(
 
 const paySchema = new Schema(
   {
-    userId: String,
+    userId: { type: ObjectId },
     amount: Number,
     remark: String,
     name: String,

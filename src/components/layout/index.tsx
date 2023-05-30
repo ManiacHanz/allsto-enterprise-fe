@@ -63,7 +63,7 @@ export const Layout: FC<Props> = ({ children, addonAfter }) => {
             return (
               <Link
                 key={route.path}
-                href={`/dashboard/${id}/${route.path}`}
+                href={`/dashboard/${route.path}`}
                 className={cls}
               >
                 {route.label}
@@ -75,7 +75,9 @@ export const Layout: FC<Props> = ({ children, addonAfter }) => {
           {session ? (
             <div className="flex">
               <Avatar alt="github avatar" src={session.user?.image ?? ""} />
-              <Button onClick={() => signOut()}>Sign out</Button>
+              <Button onClick={() => signOut({ callbackUrl: "/" })}>
+                Sign out
+              </Button>
             </div>
           ) : (
             <Button onClick={() => signIn()}>Sign in</Button>

@@ -1,6 +1,5 @@
 import { Layout } from "@/components/layout"
 import { Button, CircularProgress } from "@mui/material"
-import { useRouter } from "next/router"
 import { Table } from "@/components/dashboard/Table"
 import useSwr from "swr"
 import fetcher from "@/utils/request"
@@ -9,12 +8,7 @@ import dayjs from "dayjs"
 import { numToUSD } from "@/utils/common"
 
 const Dashboard = () => {
-  const { query } = useRouter()
-
-  const { data, error, isLoading } = useSwr<any>(
-    query.id ? `links/${query.id}` : null,
-    fetcher
-  )
+  const { data, error, isLoading } = useSwr<any>(`links`, fetcher)
 
   const columns: GridColDef[] = [
     {

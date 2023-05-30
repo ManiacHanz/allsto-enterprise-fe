@@ -1,17 +1,11 @@
 import { Layout } from "@/components/layout"
-import { useRouter } from "next/router"
 import { UserForm } from "@/components/dashboard/UserForm"
 import useSwr from "swr"
 import { Formik, FormikConfig } from "formik"
 import { MyOrgFormValue } from "@/interface/dashboard"
 import fetcher from "@/utils/request"
-import { useSession } from "next-auth/react"
 
 const MyEnterPrise = () => {
-  const session = useSession()
-  console.log(12, session)
-  const { query } = useRouter()
-
   const { data, error, isLoading } = useSwr<any>(`profile`, fetcher)
 
   const submitForm: FormikConfig<MyOrgFormValue>["onSubmit"] = (

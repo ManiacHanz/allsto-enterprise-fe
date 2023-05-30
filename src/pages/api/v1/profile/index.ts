@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "@/lib/db/connect"
 import { Accounts, Profiles } from "@/lib/db/models"
 import { getToken } from "next-auth/jwt"
-import { getSession } from "next-auth/react"
+
 const secret = process.env.NEXTAUTH_SECRET
 
 export type User = {
@@ -21,20 +21,30 @@ export default async function userHandler(
 ) {
   const { query, body, method } = req
   const { id } = query
-  const session = await getSession()
-  console.log("session: ", session)
+
   await dbConnect()
 
   switch (method) {
     case "GET":
-      // Get data from your database
-      const token = await getToken({ req, secret })
-      // const { accessToken } = token
-      // const item = await Accounts.findOne({ accessToken })
+      try {
+        const token = await getToken({ req, secret })
+        const accessToken = token?.accessToken
+        const item = await Accounts.findOne({ access_token: accessToken })
 
-      console.log("JSON Web Token", token)
-      const result = {}
-      res.status(200).json(result)
+        let profile: {} | null = {}
+        if (item) {
+          const userId = item.userId
+          profile = await Profiles.findOne({
+            userId,
+          })
+        }
+
+        res.status(200).json(profile)
+      } catch (err) {
+        console.log("error", err)
+        res.status(500).end("service error")
+      }
+
       break
     case "PUT":
       // Update or create data in your database

@@ -5,7 +5,6 @@ import fetcher from "@/utils/request"
 import { Button, Chip, CircularProgress } from "@mui/material"
 import { GridColDef } from "@mui/x-data-grid"
 import dayjs from "dayjs"
-import { useRouter } from "next/router"
 import useSwr from "swr"
 
 const statusMap = [
@@ -22,14 +21,7 @@ const renderStatus = (num: number) => {
 }
 
 const Dashboard = () => {
-  const {
-    query: { id },
-  } = useRouter()
-
-  const { data, error, isLoading } = useSwr<any>(
-    id ? `pay/${id}` : null,
-    fetcher
-  )
+  const { data, error, isLoading } = useSwr<any>(`pay`, fetcher)
 
   const columns: GridColDef[] = [
     {
